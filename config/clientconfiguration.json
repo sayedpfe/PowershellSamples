@@ -1,5 +1,5 @@
 {
-    "TenantId": "b22f8675-8375-455b-941a-67bee4cf7747",
-    "ClientId": "2cdb6dee-9c0d-45ba-a3eb-11aca2cc8ba8",
-    "Thumbprint": "A038EFD652F05B7E065199662288447E201AB650"
+    "TenantId": "<Tenant ID>",
+    "ClientId": "<Client ID>",
+    "Thumbprint": "<Certificate Thumbprint>"
 }
