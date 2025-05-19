@@ -1,16 +1,23 @@
-# Gets details about email activity users have performed.
-# Minimum Application Permission: Reports.Read.All
-# https://docs.microsoft.com/en-us/graph/api/reportroot-getemailactivityuserdetail
-
 <#
-ISSUES:
-   - Currently, SDK does not accept non-json responses. This is an open issue:
-   - https://github.com/microsoftgraph/msgraph-sdk-powershell/issues/182
+.SYNOPSIS
+Gets details about email activity users have performed.
+
+.EXAMPLE
+.\01_GetEmailActivity.ps1 -period D30 -outPath "C:\temp"
 #>
 
-# Variables
-$period  = "D30" # Supported values: D7,D30,D90,D180
-$outPath = "C:\temp"
+
+param(
+    [Parameter(Mandatory=$true)]
+    [ValidateSet("D7", "D30", "D90", "D180")]
+    [string]$period,
+
+    [Parameter(Mandatory=$true)]
+    [string]$outPath
+)
+
+$fileName = "EmailActivity_{0}_{1}.csv" -f $period, (Get-Date -Format "yyyyMMdd")
+$fullPath = Join-Path -Path $outPath -ChildPath $fileName
 
 # Get config and helper
 $root = Split-Path (Split-Path -Path $PSScriptRoot -Parent) -Parent
@@ -20,7 +27,12 @@ $config = Get-Content "$root\config\clientconfiguration.json" -Raw | ConvertFrom
 Connect-Graph -ClientId $config.ClientId -TenantId $config.TenantId -CertificateThumbprint $config.Thumbprint
 
 # Query MS Graph - Get email activity
-$activity = Get-MgReportEmailActivityUserDetail -Period $period -OutFile $outPath
+$activity = Get-MgReportEmailActivityUserDetail -period $period -OutFile $outPath
+
+# Save output manually to file
+$activity | Out-File -FilePath $fullPath -Encoding utf8
+
+# Display activity
 $activity
 
 # Disconnect MS Graph

@@ -1,12 +1,21 @@
-# Gets room utilization based on their calendars
-# Minimum Application Permission: Calendars.Read
-# https://docs.microsoft.com/en-us/graph/api/user-list-calendarview
+<#
+.SYNOPSIS
+Gets room utilization based on their calendars.
 
-# Variables
-$startTime = "2020-06-25"
-$endTime = "2020-08-03"
-$calendars = @("CharlotteRm1@contoso.com", "DublinRm1@contoso.com", "SeattleRm1@contoso.com")
+.EXAMPLE
+.\06_GetRoomsUtilization.ps1 -startTime "2025-06-25" -endTime "2025-08-03" -calendars "CharlotteRm1@contoso.com","DublinRm1@contoso.com","SeattleRm1@contoso.com"
+#>
 
+param (
+    [Parameter(Mandatory = $true)]
+    [string]$startTime,
+
+    [Parameter(Mandatory = $true)]
+    [string]$endTime,
+
+    [Parameter(Mandatory = $true)]
+    [string[]]$calendars
+)
 # Get config and helper
 $root = Split-Path (Split-Path -Path $PSScriptRoot -Parent) -Parent
 $config = Get-Content "$root\config\clientconfiguration.json" -Raw | ConvertFrom-Json

@@ -10,9 +10,23 @@ ISSUES:
 #>
 
 
-# Variables
-$outPath    = "c:\temp"
-$period     = "D30"
+<#
+.SYNOPSIS
+    Gets details about email activity users have performed.
+
+.EXAMPLE
+    .\03_GetUserActivityReport.ps1 -outPath "C:\temp" -period "D30"
+#>
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$outPath,
+
+    [Parameter(Mandatory=$true)]
+    [ValidateSet("D7", "D30", "D90", "D180")]
+    [string]$period
+)
+
 $StartTime1 = Get-Date
 
 # Get config and helper

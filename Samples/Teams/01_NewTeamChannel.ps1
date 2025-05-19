@@ -1,11 +1,28 @@
+<#
+.SYNOPSIS
+Creates a new channel in an existing Microsoft Team.
+
+.EXAMPLE
+.\01_NewTeamChannel.ps1 -teamDisplayName "New SP Team" -channelDisplayName "Knorr-Bremse" -channelDescription "Knorr-Bremse Channel Description"
+#>
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$teamDisplayName,
+
+    [Parameter(Mandatory=$true)]
+    [string]$channelDisplayName,
+
+    [Parameter(Mandatory=$true)]
+    [string]$channelDescription
+)
+
+
 # Creates a channel on an existing MS Team
 # Minimum Application Permission: Group.ReadWrite.All
 # https://docs.microsoft.com/en-us/graph/api/channel-post
 
-# Variables
-$teamDisplayName    = "New SP Team"
-$channelDisplayName = "Knorr-Bremse"
-$channelDescription = "Knorr-Bremse"
+
 
 # Get config and helper
 $root = Split-Path (Split-Path -Path $PSScriptRoot -Parent) -Parent
